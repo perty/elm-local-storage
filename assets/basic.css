@@ -1,0 +1,26 @@
+
+html, body {
+    background-color: #fffab7;
+    margin: 10px;
+    height: 100%;
+}
+
+/* Menu bar*/
+
+.menu-bar {
+    display: flex;
+    border: 1px solid;
+}
+
+.menu-item {
+    padding: 1em;
+    cursor: pointer;
+}
+
+.menu-item-end {
+    margin-left: auto;
+}
+
+.clickable {
+    cursor: pointer;
+}
