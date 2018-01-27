@@ -4,7 +4,9 @@ import Ports.LocalStorage
 import Json.Decode
 import Json.Encode
 import Navigation
-import Html exposing (Html, h1, text)
+import Html exposing (Html, form, h1, div, input, text)
+import Html.Attributes exposing (class, value)
+import Html.Events exposing (onSubmit, onInput)
 
 
 main : Program Never Model Msg
@@ -27,7 +29,8 @@ type alias Model =
 
 
 type Msg
-    = SaveSearch String
+    = UpdateSearch String
+    | SaveSearch String
     | RequestLastSearch
     | ReceiveFromLocalStorage ( String, Json.Decode.Value )
 
@@ -55,6 +58,9 @@ urlParser location =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        UpdateSearch s ->
+            ( { model | lastSearch = s }, Cmd.none )
+
         SaveSearch searchQuery ->
             ( model
             , Ports.LocalStorage.storageSetItem ( "lastSearch", Json.Encode.string searchQuery )
@@ -81,7 +87,12 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    h1 [] [ text ("Header") ]
+    div [ class "overwrite-container" ]
+        [ h1 [] [ text ("Header") ]
+        , form [ onSubmit (SaveSearch model.lastSearch) ]
+            [ input [ value model.lastSearch, onInput (\v -> UpdateSearch v) ] []
+            ]
+        ]
 
 
 

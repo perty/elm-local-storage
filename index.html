@@ -9,7 +9,11 @@
 <body>
   <script src="/app.js"></script>
   <script>
-    Elm.Main.fullscreen();
+      var localStoragePorts = require("elm-local-storage-ports");
+      var myElmApp = Elm.Main.fullscreen();
+
+      localStoragePorts.register(myElmApp.ports);
+
   </script>
 </body>
 </html>
